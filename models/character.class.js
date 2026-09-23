@@ -36,8 +36,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-53.png',
         'img/2_character_pepe/5_dead/D-54.png',
         'img/2_character_pepe/5_dead/D-55.png',
-        'img/2_character_pepe/5_dead/D-56.png',
-        'img/2_character_pepe/5_dead/D-57.png'
+        'img/2_character_pepe/5_dead/D-56.png'
     ];
     IMAGES_HURTING = [
         'img/2_character_pepe/4_hurt/H-41.png',
@@ -58,6 +57,9 @@ class Character extends MovableObject {
     animate() {
 
         setInterval(() => {
+            if (this.isDead()) {
+                return;
+            }
             if (this.world.keyboard.RIGHT && this.x < level1.level_end_x) {
                 this.moveRight();
             }
@@ -78,6 +80,8 @@ class Character extends MovableObject {
 
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DYING);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURTING);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
