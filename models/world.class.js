@@ -1,6 +1,8 @@
 class World {
     character = new Character();
     statusbar = new StatusBar();
+    healthbar = new HealthBar();
+    coinbar = new CoinBar();
     level = level1;
     canvas;
     ctx;
@@ -21,6 +23,7 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
+                    this.healthbar.setPercentage(this.healthbar.IMAGES_HEALTH, this.character.energy);
                     console.log('Character colliding, new energy:  ', this.character.energy);
                 }
             })
@@ -38,7 +41,13 @@ class World {
 
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
-        this.addToMap(this.statusbar);
+
+        this.ctx.translate(-this.camera_x, 0);
+        //---place or fixed objects:
+        this.addToMap(this.healthbar);
+        this.addToMap(this.coinbar);
+        this.ctx.translate(this.camera_x, 0);
+
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
 
