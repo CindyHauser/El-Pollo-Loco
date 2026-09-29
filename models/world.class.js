@@ -3,6 +3,7 @@ class World {
     statusbar = new StatusBar();
     healthbar = new HealthBar();
     coinbar = new CoinBar();
+    bottlebar = new BottleBar();
     throwableObjects = [];
     level = level1;
     canvas;
@@ -60,12 +61,15 @@ class World {
         //---place for fixed objects:
         this.addToMap(this.healthbar);
         this.addToMap(this.coinbar);
+        this.addToMap(this.bottlebar);
 
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
 
         this.ctx.translate(-this.camera_x, 0);
 

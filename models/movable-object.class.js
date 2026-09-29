@@ -42,13 +42,6 @@ isColliding(mo) {
         this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
 };
 
-playAnimation(images) {
-    let i = this.currentImage % images.length;
-    let path = images[i];
-    this.img = this.imageCache[path];
-    this.currentImage++;
-}
-
 hit() {
     this.energy -= 5;
     if (this.energy < 0) {
