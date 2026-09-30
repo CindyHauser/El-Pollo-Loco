@@ -2,6 +2,26 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    margin: 0;
+    height: 100vh;
+    background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.4)),
+    url('assets/background_desert.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+@font-face {
+    font-family: 'ranchers';
+    src: url('fonts/ranchers_regular.ttf');
+}
+
+h1 {
+    font-family: 'ranchers';
+    letter-spacing: 6px;
+    font-size: 64px;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
 canvas {
