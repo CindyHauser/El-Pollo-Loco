@@ -6,13 +6,26 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    deadImage;
 
     constructor() {
         super();
     }
 
+    die() {
+        this.dead = true;
+        this.energy = 0;
+        this.loadImage(this.deadImage);
+        setTimeout(() => {
+            this.remove = true;
+            clearInterval(this.moveInterval);
+            clearInterval(this.animationInterval);
+        }, 1000);
+    }
+
     applyGravity() {
         setInterval(() => {
+            if (this instanceof ThrowableObject && this.hasSplashed) return;
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;

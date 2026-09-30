@@ -1,5 +1,7 @@
 class ThrowableObject extends MovableObject {
 
+    hasSplashed = false;
+
     IMAGES_THROW_BOTTLE = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -28,18 +30,32 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        this.speedY = 30;
+        this.speedY = 15;
         this.applyGravity();
-        setInterval(() => {
-            this.x += 10;
-            this.animate();
+        this.throwInterval = setInterval(() => {
+            if (!this.hasSplashed) {
+                this.x += 12;
+            }
         }, 25);
+    }
 
+    splash() {
+        this.hasSplashed = true;
+        this.currentImage = 0;
+        this.speedY = 0;
     }
 
     animate() {
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_THROW_BOTTLE);
+        this.animationInterval = setInterval(() => {
+            if (!this.hasSplashed) {
+                this.playAnimation(this.IMAGES_THROW_BOTTLE);
+            } else if (this.currentImage < this.IMAGES_BOTTLE_SPLASH.length) {
+                this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
+            } else {
+                clearInterval(this.animationInterval);
+                clearInterval(this.throwInterval);
+                this.remove = true;
+            }
         }, 1000 / 60);
     }
 }

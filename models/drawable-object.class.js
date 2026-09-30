@@ -1,4 +1,5 @@
 class DrawableObject {
+
     x = 120;
     y = 280;
     height = 150;
@@ -6,6 +7,7 @@ class DrawableObject {
     img;
     imageCache = {};
     currentImage = 0;
+    remove = false;
 
     offset = {
         top: 0,

@@ -6,7 +6,7 @@ class World {
     bottlebar = new BottleBar();
     throwableObjects = [];
     coinsAmount = 0;
-    bottlesAmount = 0;
+    bottlesAmount = 100;
     level = level1;
     canvas;
     ctx;
@@ -27,11 +27,20 @@ class World {
             this.checkCollisions();
             this.checkThrowObject();
         }, 200);
+        setInterval(() => {
+            this.checkBottleHitsChicken();
+            this.removeDeadAndUsedObjects();
+        }, 1000 / 60);
+    }
+
+    removeDeadAndUsedObjects() {
+        this.level.enemies = this.level.enemies.filter((e) => !e.remove);
+        this.throwableObjects = this.throwableObjects.filter((b) => !b.remove);
     }
 
     checkThrowObject() {
         if (this.keyboard.D && this.bottlesAmount > 0) {
-            let bottle = new ThrowableObject(this.character.x + 55, this.character.y + 110);
+            let bottle = new ThrowableObject(this.character.x + 55, this.character.y + this.character.height - 110);
             this.throwableObjects.push(bottle);
             this.bottlesAmount -= 20;
             this.bottlebar.setPercentage(this.bottlebar.IMAGES_BOTTLE_BAR, this.bottlesAmount);
@@ -42,12 +51,11 @@ class World {
         this.checkCollisionWithChickens(this.level.enemies);
         this.checkCollisionWithBottles(this.level.bottles);
         this.checkCollisionWithCoins(this.level.coins);
-        this.checkBottleHitsChicken();
     }
 
     checkCollisionWithChickens(chickens) {
         chickens.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (!enemy.isDead() && this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.healthbar.setPercentage(this.healthbar.IMAGES_HEALTH, this.character.energy);
             }
@@ -74,9 +82,18 @@ class World {
         })
     }
 
-    // checkBottleHitsChicken() {
+    checkBottleHitsChicken() {
+        this.throwableObjects.forEach((bottle) => {
+            if (bottle.hasSplashed) return;
 
-    // }
+            this.level.enemies.forEach((enemy) => {
+                if (enemy instanceof Chicken && !enemy.isDead() && bottle.isColliding(enemy)) {
+                    enemy.die();
+                    bottle.splash();
+                }
+            });
+        });
+    }
 
     setWorld() {
         this.character.world = this;
