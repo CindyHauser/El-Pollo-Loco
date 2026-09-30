@@ -3,6 +3,13 @@ class Coin extends DrawableObject {
     height = 120;
     width = 120;
 
+    offset = {
+        top: 30,
+        bottom: 30,
+        left: 25,
+        right: 25
+    }
+
     IMAGES_COIN = [
         'img/8_coin/coin_1.png',
         'img/8_coin/coin_2.png'
@@ -17,7 +24,7 @@ class Coin extends DrawableObject {
         this.animate();
     }
 
-    animate(){
+    animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_COIN);
         }, 400);

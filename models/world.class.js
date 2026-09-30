@@ -5,6 +5,8 @@ class World {
     coinbar = new CoinBar();
     bottlebar = new BottleBar();
     throwableObjects = [];
+    coinsAmount = 0;
+    bottlesAmount = 0;
     level = level1;
     canvas;
     ctx;
@@ -22,27 +24,59 @@ class World {
 
     run() {
         setInterval(() => {
-            this.checkCollision();
+            this.checkCollisions();
             this.checkThrowObject();
         }, 200);
     }
 
     checkThrowObject() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.bottlesAmount > 0) {
             let bottle = new ThrowableObject(this.character.x + 55, this.character.y + 110);
             this.throwableObjects.push(bottle);
+            this.bottlesAmount -= 20;
+            this.bottlebar.setPercentage(this.bottlebar.IMAGES_BOTTLE_BAR, this.bottlesAmount);
         }
     }
 
-    checkCollision() {
-        this.level.enemies.forEach((enemy) => {
+    checkCollisions() {
+        this.checkCollisionWithChickens(this.level.enemies);
+        this.checkCollisionWithBottles(this.level.bottles);
+        this.checkCollisionWithCoins(this.level.coins);
+        this.checkBottleHitsChicken();
+    }
+
+    checkCollisionWithChickens(chickens) {
+        chickens.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.healthbar.setPercentage(this.healthbar.IMAGES_HEALTH, this.character.energy);
-                console.log('Character colliding, new energy:  ', this.character.energy);
             }
         })
     }
+
+    checkCollisionWithBottles(bottles) {
+        bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle) && this.bottlesAmount < 100) {
+                this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
+                this.bottlesAmount += 20;
+                this.bottlebar.setPercentage(this.bottlebar.IMAGES_BOTTLE_BAR, this.bottlesAmount);
+            }
+        })
+    }
+
+    checkCollisionWithCoins(coins) {
+        coins.forEach((coin) => {
+            if (this.character.isColliding(coin) && this.coinsAmount < 100) {
+                this.level.coins.splice(this.level.coins.indexOf(coin), 1);
+                this.coinsAmount += 20;
+                this.coinbar.setPercentage(this.coinbar.IMAGES_COIN_BAR, this.coinsAmount);
+            }
+        })
+    }
+
+    // checkBottleHitsChicken() {
+
+    // }
 
     setWorld() {
         this.character.world = this;

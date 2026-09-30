@@ -16,6 +16,6 @@ class BottleBar extends StatusBar {
         this.y = 70;
         this.width = 190;
         this.height = 45;
-        this.setPercentage(this.IMAGES_BOTTLE_BAR, 0);
+        this.setPercentage(this.IMAGES_BOTTLE_BAR, this.bottlesAmount);
     }
 }
