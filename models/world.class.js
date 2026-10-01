@@ -24,13 +24,15 @@ class World {
 
     run() {
         setInterval(() => {
+            this.checkBottleHitsChicken();
+            this.checkCharacterCollidesWithChickensOrJumpOn(this.level.enemies);
+            this.removeDeadAndUsedObjects();
+        }, 1000 / 60);
+
+        setInterval(() => {
             this.checkCollisions();
             this.checkThrowObject();
         }, 200);
-        setInterval(() => {
-            this.checkBottleHitsChicken();
-            this.removeDeadAndUsedObjects();
-        }, 1000 / 60);
     }
 
     removeDeadAndUsedObjects() {
@@ -48,16 +50,19 @@ class World {
     }
 
     checkCollisions() {
-        this.checkCollisionWithChickens(this.level.enemies);
         this.checkCollisionWithBottles(this.level.bottles);
         this.checkCollisionWithCoins(this.level.coins);
     }
 
-    checkCollisionWithChickens(chickens) {
+    checkCharacterCollidesWithChickensOrJumpOn(chickens) {
         chickens.forEach((enemy) => {
-            if (!enemy.isDead() && this.character.isColliding(enemy)) {
+            if (enemy.isDead() || !this.character.isColliding(enemy)) return;
+            if (this.character.speedY < 0) {
+                enemy.die();
+            } else {
                 this.character.hit();
                 this.healthbar.setPercentage(this.healthbar.IMAGES_HEALTH, this.character.energy);
+                console.log(this.character.energy);
             }
         })
     }
@@ -117,7 +122,9 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
+        this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.smallEnemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);

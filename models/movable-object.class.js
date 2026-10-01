@@ -29,6 +29,8 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+            } else {
+                this.speedY = 0;
             }
         }, 1000 / 25);
     }
@@ -49,9 +51,10 @@ class MovableObject extends DrawableObject {
     };
 
     hit() {
-        this.energy -= 5;
+        if (this.isHurt()) return;
+        this.energy -= 20;
         if (this.energy < 0) {
-            this.energy = 0
+            this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
@@ -59,7 +62,7 @@ class MovableObject extends DrawableObject {
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
-        timepassed = timepassed / 1000;
+        timepassed = timepassed / 1000;        
         return timepassed < 1;
     }
 
