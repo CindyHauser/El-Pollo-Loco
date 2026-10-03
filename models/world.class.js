@@ -1,9 +1,10 @@
 class World {
     character = new Character();
-    statusbar = new StatusBar();
+    // statusbar = new StatusBar();
     healthbar = new HealthBar();
     coinbar = new CoinBar();
     bottlebar = new BottleBar();
+    endbossHealthbar = new EndbossHealthbar();
     throwableObjects = [];
     coinsAmount = 0;
     bottlesAmount = 100;
@@ -24,8 +25,11 @@ class World {
 
     run() {
         setInterval(() => {
-            this.checkBottleHitsChicken();
+            this.checkBottleHitsChicken(this.level.enemies);
+            this.checkBottleHitsChicken(this.level.smallEnemies);
+            this.checkBottleHitsEndboss(this.level.endboss);
             this.checkCharacterCollidesWithChickensOrJumpOn(this.level.enemies);
+            this.checkCharacterCollidesWithChickensOrJumpOn(this.level.smallEnemies);
             this.removeDeadAndUsedObjects();
         }, 1000 / 60);
 
@@ -37,6 +41,8 @@ class World {
 
     removeDeadAndUsedObjects() {
         this.level.enemies = this.level.enemies.filter((e) => !e.remove);
+        this.level.smallEnemies = this.level.smallEnemies.filter((e) => !e.remove);
+        this.level.endboss = this.level.endboss.filter((boss) => !boss.remove);
         this.throwableObjects = this.throwableObjects.filter((b) => !b.remove);
     }
 
@@ -62,7 +68,7 @@ class World {
             } else {
                 this.character.hit();
                 this.healthbar.setPercentage(this.healthbar.IMAGES_HEALTH, this.character.energy);
-                console.log(this.character.energy);
+                console.log('Character: ', this.character.energy);
             }
         })
     }
@@ -87,17 +93,33 @@ class World {
         })
     }
 
-    checkBottleHitsChicken() {
+    checkBottleHitsChicken(enemies) {
         this.throwableObjects.forEach((bottle) => {
             if (bottle.hasSplashed) return;
 
-            this.level.enemies.forEach((enemy) => {
-                if (enemy instanceof Chicken && !enemy.isDead() && bottle.isColliding(enemy)) {
+            enemies.forEach((enemy) => {
+                if ((enemy instanceof Chicken || enemy instanceof SmallChicken)
+                    && !enemy.isDead() && bottle.isColliding(enemy)) {
                     enemy.die();
                     bottle.splash();
                 }
             });
         });
+    }
+
+    checkBottleHitsEndboss(endboss) {
+        this.throwableObjects.forEach((bottle) => {
+            if (bottle.hasSplashed) return;
+
+            endboss.forEach((boss) => {
+                if (!boss.isDead() && bottle.isColliding(boss)) {
+                    boss.hit();
+                    bottle.splash();
+                    this.endbossHealthbar.setPercentage(this.endbossHealthbar.IMAGES_ENDBOSS_HEALTH, boss.energy);
+                    console.log(boss.energy);
+                }
+            })
+        })
     }
 
     setWorld() {
@@ -118,6 +140,7 @@ class World {
         this.addToMap(this.healthbar);
         this.addToMap(this.coinbar);
         this.addToMap(this.bottlebar);
+        this.addToMap(this.endbossHealthbar);
 
         this.ctx.translate(this.camera_x, 0);
 

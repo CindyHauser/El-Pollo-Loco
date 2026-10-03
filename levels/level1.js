@@ -1,14 +1,14 @@
 const level1 = new Level(
     [
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken()
+        new Chicken(400),
+        new Chicken(1100),
+        new Chicken(1700),
+        new Chicken(2200)
     ],
     [
-        new SmallChicken(),
-        new SmallChicken(),
-        new SmallChicken()
+        new SmallChicken(800),
+        new SmallChicken(1400),
+        new SmallChicken(2000)
     ],
     [
         new Endboss()
@@ -43,10 +43,10 @@ const level1 = new Level(
     [
         new Bottle(470, 350),
         new Bottle(470, 200),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
+        new Bottle(870, 350),
+        new Bottle(870, 200),
+        new Bottle(1500, 350),
+        new Bottle(1500, 200),
         new Bottle(),
         new Bottle()
     ],
