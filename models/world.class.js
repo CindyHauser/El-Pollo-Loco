@@ -36,7 +36,12 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObject();
+            this.checkIfEndbossIsAlert();
         }, 200);
+    }
+
+    setWorld() {
+        this.character.world = this;
     }
 
     removeDeadAndUsedObjects() {
@@ -107,6 +112,12 @@ class World {
         });
     }
 
+    checkIfEndbossIsAlert() {
+        if (this.character.x >= 300) {
+            this.level.endboss[0].isAlert = true;
+        };
+    }
+
     checkBottleHitsEndboss(endboss) {
         this.throwableObjects.forEach((bottle) => {
             if (bottle.hasSplashed) return;
@@ -120,10 +131,6 @@ class World {
                 }
             })
         })
-    }
-
-    setWorld() {
-        this.character.world = this;
     }
 
     draw() {
@@ -144,8 +151,8 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
-        this.addToMap(this.character);
         this.addObjectsToMap(this.level.endboss);
+        this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.smallEnemies);
         this.addObjectsToMap(this.throwableObjects);
