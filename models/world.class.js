@@ -1,6 +1,5 @@
 class World {
     character = new Character();
-    // statusbar = new StatusBar();
     healthbar = new HealthBar();
     coinbar = new CoinBar();
     bottlebar = new BottleBar();
@@ -30,6 +29,7 @@ class World {
             this.checkBottleHitsEndboss(this.level.endboss);
             this.checkCharacterCollidesWithChickensOrJumpOn(this.level.enemies);
             this.checkCharacterCollidesWithChickensOrJumpOn(this.level.smallEnemies);
+            this.checkCharacterCollidesWithChickensOrJumpOn(this.level.endboss);
             this.removeDeadAndUsedObjects();
         }, 1000 / 60);
 
@@ -68,12 +68,14 @@ class World {
     checkCharacterCollidesWithChickensOrJumpOn(chickens) {
         chickens.forEach((enemy) => {
             if (enemy.isDead() || !this.character.isColliding(enemy)) return;
-            if (this.character.speedY < 0) {
+            if (this.character.speedY < 0 && enemy != this.level.endboss[0]) {
                 enemy.die();
             } else {
                 this.character.hit();
                 this.healthbar.setPercentage(this.healthbar.IMAGES_HEALTH, this.character.energy);
+                this.level.endboss[0].isAttacking = true;
                 console.log('Character: ', this.character.energy);
+                console.log(this.level.endboss[0].isAttacking);
             }
         })
     }
@@ -113,9 +115,10 @@ class World {
     }
 
     checkIfEndbossIsAlert() {
-        if (this.character.x >= 300) {
-            this.level.endboss[0].isAlert = true;
-        };
+        const endboss = this.level.endboss[0];
+        if (endboss && !endboss.isDead() && this.character.x >= 300) {
+            endboss.isAlert = true;
+        }
     }
 
     checkBottleHitsEndboss(endboss) {

@@ -1,12 +1,16 @@
 class Endboss extends MovableObject {
 
-    // height = 400;
-    // width = 250;
     height = 340;
     width = 240;
     y = 110;
     energy = 100;
+    speed = 0.2;
     isAlert = false;
+    inAttackMode = false;
+    isAttacking = false;
+    alertAnimationIndex = 0;
+    attackAnimationIndex = 0;
+    deathAnimationIndex = 0;
 
     offset = {
         top: 70,
@@ -57,26 +61,85 @@ class Endboss extends MovableObject {
     ];
 
     constructor() {
-        super().loadImage(this.IMAGES_WALKING[0]);
+        super().loadImage(this.IMAGES_WALKING[1]);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        // this.x = 2520;
-        this.x = 450;
+        this.x = 2520;
+        // this.x = 550;
         this.animate();
     }
 
     animate() {
         setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAlert) {
-                this.playAnimation(this.IMAGES_ALERT);
-            }
-        }, 200)
+            this.walkingBoss();
+        }, 1000 / 60);
+
+        setInterval(() => {
+            this.fightingBoss();
+        }, 200);
+    }
+
+    fightingBoss() {
+        if (this.isDead()) {
+            this.playDeathAnimation();
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (this.isAlert && !this.inAttackMode) {
+            this.playAlertAnimation();
+        } else if (this.isWalking()) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } else if (this.isNowAttacking()) {
+            this.playAttackAnimation();
+        }
+    }
+
+    playAlertAnimation() {
+        if (this.alertAnimationIndex === this.IMAGES_ALERT.length) {
+            this.inAttackMode = true;
+            this.currentImage = 0;
+            return;
+        }
+        this.currentImage = this.alertAnimationIndex;
+        this.playAnimation(this.IMAGES_ALERT);
+        this.alertAnimationIndex++;
+    }
+
+    playAttackAnimation() {
+        if (this.attackAnimationIndex <= this.IMAGES_ATTACK.length - 1) {
+            this.currentImage = this.attackAnimationIndex;
+            this.playAnimation(this.IMAGES_ATTACK);
+            this.attackAnimationIndex++;
+        } else {
+            this.attackAnimationIndex = 0;
+            this.isAttacking = false;
+        };
+    }
+
+    isNowAttacking() {
+        return !this.isDead() && this.isAttacking && !this.isHurt();
+    }
+
+    playDeathAnimation() {
+        if (this.deathAnimationIndex <= this.IMAGES_DEAD.length - 1) {
+            this.currentImage = this.deathAnimationIndex;
+            this.playAnimation(this.IMAGES_DEAD);
+            this.deathAnimationIndex++;
+        } else {
+            this.deathAnimationIndex = 0;
+            this.remove = true;
+        }
+    }
+
+    walkingBoss() {
+        if (this.isWalking()) {
+            this.moveLeft();
+        }
+    }
+
+    isWalking() {
+        return !this.isDead() && this.inAttackMode && !this.isAttacking && !this.isHurt();
     }
 }
