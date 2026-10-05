@@ -55,6 +55,7 @@ class World {
         if (this.keyboard.D && this.bottlesAmount > 0) {
             let bottle = new ThrowableObject(this.character.x + 55, this.character.y + this.character.height - 110);
             this.throwableObjects.push(bottle);
+            this.character.lastKeypress = Date.now();
             this.bottlesAmount -= 20;
             this.bottlebar.setPercentage(this.bottlebar.IMAGES_BOTTLE_BAR, this.bottlesAmount);
         }
