@@ -1,0 +1,7 @@
+#startScreen {
+    height: 480px;
+    width: 720px;
+    background-image: url('../img/9_intro_outro_screens/start/startscreen_1.png');
+    background-position: center;
+    background-size: cover;
+}

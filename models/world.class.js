@@ -4,9 +4,10 @@ class World {
     coinbar = new CoinBar();
     bottlebar = new BottleBar();
     endbossHealthbar = new EndbossHealthbar();
+    endbossHealthbarVisible = false;
     throwableObjects = [];
     coinsAmount = 0;
-    bottlesAmount = 100;
+    bottlesAmount = 0;
     level = level1;
     canvas;
     ctx;
@@ -117,7 +118,7 @@ class World {
 
     checkIfEndbossIsAlert() {
         const endboss = this.level.endboss[0];
-        if (endboss && !endboss.isDead() && this.character.x >= 300) {
+        if (endboss && !endboss.isDead() && this.character.x >= 2100) {
             endboss.isAlert = true;
         }
     }
@@ -137,6 +138,15 @@ class World {
         })
     }
 
+    checkHowCloseToEndboss() {
+        if (this.level.endboss[0] && !this.level.endboss[0].isDead() && this.character.x >= this.level.endboss[0].x - 650) {
+            this.endbossHealthbarVisible = true;
+        }
+        if (this.endbossHealthbarVisible) {
+            this.addToMap(this.endbossHealthbar);
+        }
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -151,7 +161,7 @@ class World {
         this.addToMap(this.healthbar);
         this.addToMap(this.coinbar);
         this.addToMap(this.bottlebar);
-        this.addToMap(this.endbossHealthbar);
+        this.checkHowCloseToEndboss();
 
         this.ctx.translate(this.camera_x, 0);
 

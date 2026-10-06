@@ -83,54 +83,63 @@ class Character extends MovableObject {
     }
 
     animate() {
-
         setInterval(() => {
-            if (this.isDead()) {
-                return;
-            }
-            if (this.world.keyboard.RIGHT && this.x < level1.level_end_x) {
-                this.moveRight();
-                this.lastKeypress = Date.now();
-            }
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.lastKeypress = Date.now();
-            }
-            if ((this.world.keyboard.UP || this.world.keyboard.SPACE) && !this.isAboveGround()) {
-                this.jump();
-                this.lastKeypress = Date.now();
-            }
-
-            this.world.camera_x = -this.x + 100;
+            this.movingTheCharacter();
         }, 1000 / 60);
 
         setInterval(() => {
-
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DYING);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURTING);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_WALKING);
-            } else if (Date.now() - this.lastKeypress < 3500){
-                this.loadImage('img/2_character_pepe/1_idle/standingPepe.png');
-            }
+            this.moveAnimationsForCharacter();
         }, 50);
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || 
-                this.world.keyboard.D || this.world.keyboard.SPACE || this.isDead() || this.isHurt() || this.isAboveGround()) {
-                return;
-            } else if (Date.now() - this.lastKeypress >= 3500 && Date.now() - this.lastKeypress < 8000) {
-                this.playAnimation(this.IMAGES_IDLE);
-            } else if (Date.now() - this.lastKeypress >= 8000) {
-                this.playAnimation(this.IMAGES_LONG_IDLE)
-            }
+            this.idleAnimationsForCharacter();
         }, 150);
+    }
 
+
+    movingTheCharacter() {
+        if (this.isDead()) {
+            return;
+        }
+        if (this.world.keyboard.RIGHT && this.x < level1.level_end_x) {
+            this.moveRight();
+            this.lastKeypress = Date.now();
+        }
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+            this.lastKeypress = Date.now();
+        }
+        if ((this.world.keyboard.UP || this.world.keyboard.SPACE) && !this.isAboveGround()) {
+            this.jump();
+            this.lastKeypress = Date.now();
+        }
+        this.world.camera_x = -this.x + 100;
+    }
+
+    moveAnimationsForCharacter() {
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGES_DYING);
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURTING);
+        } else if (this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } else if (Date.now() - this.lastKeypress < 3500) {
+            this.loadImage('img/2_character_pepe/1_idle/standingPepe.png');
+        }
+    }
+
+    idleAnimationsForCharacter() {
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP ||
+            this.world.keyboard.D || this.world.keyboard.SPACE || this.isDead() || this.isHurt() || this.isAboveGround()) {
+            return;
+        } else if (Date.now() - this.lastKeypress >= 3500 && Date.now() - this.lastKeypress < 8000) {
+            this.playAnimation(this.IMAGES_IDLE);
+        } else if (Date.now() - this.lastKeypress >= 8000) {
+            this.playAnimation(this.IMAGES_LONG_IDLE)
+        }
     }
 
 }
