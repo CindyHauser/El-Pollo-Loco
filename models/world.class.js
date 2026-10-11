@@ -20,6 +20,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.gameOver = new GameOver(this);
         this.run();
     }
 
@@ -38,6 +39,7 @@ class World {
             this.checkCollisions();
             this.checkThrowObject();
             this.checkIfEndbossIsAlert();
+            this.gameOver.checkGameOver();
         }, 200);
     }
 
@@ -48,7 +50,7 @@ class World {
     removeDeadAndUsedObjects() {
         this.level.enemies = this.level.enemies.filter((e) => !e.remove);
         this.level.smallEnemies = this.level.smallEnemies.filter((e) => !e.remove);
-        this.level.endboss = this.level.endboss.filter((boss) => !boss.remove);
+        // this.level.endboss = this.level.endboss.filter((boss) => !boss.remove);
         this.throwableObjects = this.throwableObjects.filter((b) => !b.remove);
     }
 
@@ -76,8 +78,8 @@ class World {
                 this.character.hit();
                 this.healthbar.setPercentage(this.healthbar.IMAGES_HEALTH, this.character.energy);
                 this.level.endboss[0].isAttacking = true;
-                console.log('Character: ', this.character.energy);
-                console.log(this.level.endboss[0].isAttacking);
+                // console.log('Character: ', this.character.energy);
+                // console.log(this.level.endboss[0].isAttacking);
             }
         })
     }
@@ -132,7 +134,7 @@ class World {
                     boss.hit();
                     bottle.splash();
                     this.endbossHealthbar.setPercentage(this.endbossHealthbar.IMAGES_ENDBOSS_HEALTH, boss.energy);
-                    console.log(boss.energy);
+                    // console.log(boss.energy);
                 }
             })
         })
