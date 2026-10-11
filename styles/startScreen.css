@@ -4,4 +4,57 @@
     background-image: url('../img/9_intro_outro_screens/start/startscreen_1.png');
     background-position: center;
     background-size: cover;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+.startScreen_btn {
+    font-family: 'ranchers';
+    font-size: 20px;
+    margin-top: 20px;
+    background-color: transparent;
+    border: none;
+}
+
+.startScreen_btn img {
+    height: 42px;
+}
+
+#dialogControlsStory {
+    color: #FF9600;
+    max-width: 600px;
+    letter-spacing: 2px;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.6)),
+        url('../assets/background_desert.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+#dialogControlsStory::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.dialog_header_controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dialog_header_controls button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.dialog_header_controls button img {
+    width: 30px;
+    height: 30px;
 }

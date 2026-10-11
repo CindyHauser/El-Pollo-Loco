@@ -7,6 +7,7 @@
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="styles/startScreen.css">
+    <link rel="shortcut icon" href="./assets/favicon-sombrero.png" type="image/x-icon">
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
@@ -26,6 +27,7 @@
     <script src="models/keyboard.class.js"></script>
     <script src="models/level.class.js"></script>
     <script src="models/endboss.class.js"></script>
+    <script src="/js/start-endscreen.js"></script>
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
 </head>
@@ -35,11 +37,54 @@
     <h1>El Pollo Loco</h1>
 
     <div id="startScreen">
-        <button onclick="startGame()">Start Game</button>
+        <button class="startScreen_btn" onclick="startGame()">
+            <img src="./assets/buttons/play.svg" alt="play-button"><br><span>Start Game</span>
+        </button>
+        <button class="startScreen_btn" onclick="toggleDialog()">
+            <img src="/assets/buttons/controls.svg" alt="control-button"><br><span>Story and Controls</span>
+        </button>
     </div>
 
-    <canvas id="canvas" height="480px" width="720px">
+    <dialog id="dialogControlsStory" onclick="toggleDialog()">
+        <main onclick="stopPropagation(event)">
+            <header class="dialog_header_controls">
+                <h2>Story</h2>
+                <button onclick="toggleDialog()"><img src="./assets/buttons/close.svg" alt="close"></button>
+            </header>
+            <section>
+                Der unerschrockene Pepe macht sich auf den Weg, um sich durch eine Horde wilder Chickens zu kämpfen.
+                Doch es sind so viele, aber sein Ziel ist klar: Der legendäre Don Chicken wartet auf ihn!
+                Kann Pepe ihn besiegen und sich als wahrer Held beweisen?
+            </section>
+            <h2>Controls</h2>
+            <section>
+                <table>
+                    <tr>
+                        <td>up arrow / space</td>
+                        <td>=</td>
+                        <td>Jump</td>
+                    </tr>
+                    <tr>
+                        <td>left arrow</td>
+                        <td>=</td>
+                        <td>move left</td>
+                    </tr>
+                    <tr>
+                        <td>right arrow</td>
+                        <td>=</td>
+                        <td>move right</td>
+                    </tr>
+                    <tr>
+                        <td>d</td>
+                        <td>=</td>
+                        <td>throw bottle</td>
+                    </tr>
+                </table>
+            </section>
+        </main>
+    </dialog>
 
+    <canvas id="canvas" height="480px" width="720px">
     </canvas>
 
 </body>
