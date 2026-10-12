@@ -32,7 +32,7 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 15;
         this.applyGravity();
-        this.throwInterval = setInterval(() => {
+        this.throwInterval = setStoppableInterval(() => {
             if (!this.hasSplashed) {
                 this.x += 12;
             }
@@ -46,7 +46,7 @@ class ThrowableObject extends MovableObject {
     }
 
     animate() {
-        this.animationInterval = setInterval(() => {
+        this.animationInterval = setStoppableInterval(() => {
             if (!this.hasSplashed) {
                 this.playAnimation(this.IMAGES_THROW_BOTTLE);
             } else if (this.currentImage < this.IMAGES_BOTTLE_SPLASH.length) {

@@ -73,11 +73,11 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.walkingBoss();
         }, 1000 / 60);
 
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.fightingBoss();
         }, 200);
     }
@@ -129,7 +129,6 @@ class Endboss extends MovableObject {
             this.deathAnimationIndex++;
         } else {
             this.deathAnimationIndex = 0;
-            this.remove = true;
         }
     }
 

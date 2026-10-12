@@ -1,12 +1,37 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let intervalIDs = [];
+
+function setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    intervalIDs.push(id);
+    return id;
+}
+
+function stopGame() {
+    intervalIDs.forEach(clearInterval);
+}
 
 function startGame(){
     document.getElementById('startScreen').style.display = 'none';
     document.getElementById('canvas').style.display = 'block';
     initLevel();
     init();
+}
+
+function restartGame() {
+    intervalIDs = [];
+    document.getElementById('endScreen').style.display = 'none';
+    initLevel();
+    init();
+}
+
+function homeScreen() {
+    intervalIDs = [];
+    document.getElementById('startScreen').style.display = 'flex';
+    document.getElementById('canvas').style.display = 'none';
+    document.getElementById('endScreen').style.display = 'none';
 }
 
 function init() {

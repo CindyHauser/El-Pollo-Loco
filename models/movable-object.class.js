@@ -24,7 +24,7 @@ class MovableObject extends DrawableObject {
     }
 
     applyGravity() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             if (this instanceof ThrowableObject && this.hasSplashed) return;
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;

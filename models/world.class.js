@@ -25,7 +25,7 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.checkBottleHitsChicken(this.level.enemies);
             this.checkBottleHitsChicken(this.level.smallEnemies);
             this.checkBottleHitsEndboss(this.level.endboss);
@@ -35,7 +35,7 @@ class World {
             this.removeDeadAndUsedObjects();
         }, 1000 / 60);
 
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.checkCollisions();
             this.checkThrowObject();
             this.checkIfEndbossIsAlert();
@@ -50,7 +50,6 @@ class World {
     removeDeadAndUsedObjects() {
         this.level.enemies = this.level.enemies.filter((e) => !e.remove);
         this.level.smallEnemies = this.level.smallEnemies.filter((e) => !e.remove);
-        // this.level.endboss = this.level.endboss.filter((boss) => !boss.remove);
         this.throwableObjects = this.throwableObjects.filter((b) => !b.remove);
     }
 
