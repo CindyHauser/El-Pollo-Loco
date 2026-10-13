@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="styles/startScreen.css">
     <link rel="stylesheet" href="styles/endScreen.css">
     <link rel="shortcut icon" href="./assets/favicon-sombrero.png" type="image/x-icon">
+    <link rel="stylesheet" href="./styles/canvas.css">
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
@@ -29,6 +30,7 @@
     <script src="models/level.class.js"></script>
     <script src="models/endboss.class.js"></script>
     <script src="/js/startScreen.js"></script>
+    <script src="./js/audio.js"></script>
     <script src="./models/game-over.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
@@ -51,6 +53,13 @@
 
         <canvas id="canvas" height="480px" width="720px">
         </canvas>
+        <div id="gameBar">
+            <button id="pauseBtn" onclick="pauseGame()">
+                <img src="./assets/buttons/pause-canvas.svg"
+                    alt="pause Button"></button>
+            <button id="muteSoundsBtn" onclick="toggleMuteSounds()">
+                <img src="./assets/buttons/sound-on.svg" alt="sound on"></button>
+        </div>
 
         <div id="endScreen">
             <button onclick="restartGame()">Restart</button>

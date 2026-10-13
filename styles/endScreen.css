@@ -8,9 +8,35 @@
     justify-content: space-evenly;
     height: 480px;
     width: 720px;
-    background-position: center;
+    background-position: center 70%;
     background-size: 70%;
     background-repeat: no-repeat;
+}
+
+#endScreen button {
+    box-shadow: 2px 2px 8px 2px;
+    -webkit-text-stroke: 0.7px black;
+    color: #BF0000;
+    background-color: #FF9600;
+    letter-spacing: 1px;
+    width: 60px;
+    border-radius: 50%;
+    padding: 5px;
+    font-family: 'ranchers';
+    border: none;
+    animation: buttonsComeForward 2s ease-out forwards;
+}
+
+@keyframes buttonsComeForward {
+    from {
+        opacity: 0;
+        transform: translateY(80px) scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(80px) scale(2);
+    }
 }
 
 .canvas_endscreen_startscreen_wrapper {

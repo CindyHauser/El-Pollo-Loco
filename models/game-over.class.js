@@ -11,15 +11,17 @@ class GameOver {
         if (this.world.character.isDead()) {
             endScreen.style.display = 'flex';
             endScreen.style.backgroundImage = "url('../img/You won, you lost/Game Over.png')";
+            document.getElementById('gameBar').style.display = 'none';
             setTimeout(() => {
                 stopGame();
-            }, 1200);
+            }, 1500);
         } else if (this.world.level.endboss[0].isDead()) {
             endScreen.style.display = 'flex';
             endScreen.style.backgroundImage = "url('../img/You won, you lost/You Win A.png')";
+            document.getElementById('gameBar').style.display = 'none';
             setTimeout(() => {
                 stopGame();
-            }, 1200);
+            }, 1500);
         }
     }
 }
