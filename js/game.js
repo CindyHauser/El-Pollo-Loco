@@ -34,6 +34,7 @@ function pauseGame() {
 }
 
 function startGame() {
+    enterFullscreen();
     document.getElementById('startScreen').style.display = 'none';
     document.getElementById('canvas').style.display = 'block';
     document.getElementById('gameBar').style.display = 'flex';
