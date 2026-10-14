@@ -112,6 +112,8 @@ class Character extends MovableObject {
         }
         if ((this.world.keyboard.UP || this.world.keyboard.SPACE) && !this.isAboveGround()) {
             this.jump();
+            jumpSound.currentTime = 0;
+            jumpSound.play();
             this.lastKeypress = Date.now();
         }
         this.world.camera_x = -this.x + 100;

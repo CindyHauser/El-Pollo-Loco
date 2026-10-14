@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="styles/startScreen.css">
     <link rel="stylesheet" href="styles/endScreen.css">
     <link rel="shortcut icon" href="./assets/favicon-sombrero.png" type="image/x-icon">
-    <link rel="stylesheet" href="./styles/canvas.css">
+    <link rel="stylesheet" href="./styles/canvas-overlays.css">
+    <link rel="stylesheet" href="./styles/media.css">
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
@@ -51,8 +52,9 @@
             </button>
         </div>
 
-        <canvas id="canvas" height="480px" width="720px">
+        <canvas id="canvas" height="480" width="720">
         </canvas>
+
         <div id="gameBar">
             <button id="pauseBtn" onclick="pauseGame()">
                 <img src="./assets/buttons/pause-canvas.svg"
@@ -66,6 +68,10 @@
             <button onclick="homeScreen()">Home</button>
         </div>
 
+    </div>
+
+    <div id="rotateDeviceMessage">
+        <p>Turn your <br> Device</p>
     </div>
 
     <dialog id="dialogControlsStory" onclick="toggleDialog()">

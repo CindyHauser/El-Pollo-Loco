@@ -4,7 +4,7 @@ class Endboss extends MovableObject {
     width = 240;
     y = 110;
     energy = 100;
-    speed = 0.2;
+    speed = 1.3;
     isAlert = false;
     inAttackMode = false;
     isAttacking = false;
@@ -68,7 +68,6 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 2520;
-        // this.x = 550;
         this.animate();
     }
 
@@ -79,7 +78,7 @@ class Endboss extends MovableObject {
 
         setStoppableInterval(() => {
             this.fightingBoss();
-        }, 200);
+        }, 100);
     }
 
     fightingBoss() {

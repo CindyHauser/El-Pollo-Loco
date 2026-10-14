@@ -32,3 +32,7 @@ canvas {
     background-color: black;
     display: none;
 }
+
+#rotateDeviceMessage {
+    display: none;
+}

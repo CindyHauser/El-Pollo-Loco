@@ -77,8 +77,6 @@ class World {
                 this.character.hit();
                 this.healthbar.setPercentage(this.healthbar.IMAGES_HEALTH, this.character.energy);
                 this.level.endboss[0].isAttacking = true;
-                // console.log('Character: ', this.character.energy);
-                // console.log(this.level.endboss[0].isAttacking);
             }
         })
     }
@@ -86,6 +84,8 @@ class World {
     checkCollisionWithBottles(bottles) {
         bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle) && this.bottlesAmount < 100) {
+                bottlePickUp.currentTime = 0;
+                bottlePickUp.play();
                 this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
                 this.bottlesAmount += 20;
                 this.bottlebar.setPercentage(this.bottlebar.IMAGES_BOTTLE_BAR, this.bottlesAmount);
@@ -96,6 +96,8 @@ class World {
     checkCollisionWithCoins(coins) {
         coins.forEach((coin) => {
             if (this.character.isColliding(coin) && this.coinsAmount < 100) {
+                coinSound.currentTime = 0;
+                coinSound.play();
                 this.level.coins.splice(this.level.coins.indexOf(coin), 1);
                 this.coinsAmount += 20;
                 this.coinbar.setPercentage(this.coinbar.IMAGES_COIN_BAR, this.coinsAmount);
@@ -119,7 +121,7 @@ class World {
 
     checkIfEndbossIsAlert() {
         const endboss = this.level.endboss[0];
-        if (endboss && !endboss.isDead() && this.character.x >= 2100) {
+        if (endboss && !endboss.isDead() && this.character.x >= this.level.endboss[0].x - 650) {
             endboss.isAlert = true;
         }
     }
@@ -133,14 +135,13 @@ class World {
                     boss.hit();
                     bottle.splash();
                     this.endbossHealthbar.setPercentage(this.endbossHealthbar.IMAGES_ENDBOSS_HEALTH, boss.energy);
-                    // console.log(boss.energy);
                 }
             })
         })
     }
 
     checkHowCloseToEndboss() {
-        if (this.level.endboss[0] && !this.level.endboss[0].isDead() && this.character.x >= this.level.endboss[0].x - 650) {
+        if (this.level.endboss[0] && !this.level.endboss[0].isDead() && this.character.x >= this.level.endboss[0].x - 640) {
             this.endbossHealthbarVisible = true;
         }
         if (this.endbossHealthbarVisible) {
