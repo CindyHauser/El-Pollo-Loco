@@ -11,10 +11,10 @@ function stopPropagation(event) {
     event.stopPropagation();
 }
 
-function enterFullscreen() {
-    if (window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches) {
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen().catch(() => { });
-        }
-    }
-}
+// function enterFullscreen() {
+//     if (window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches) {
+//         if (document.documentElement.requestFullscreen) {
+//             document.documentElement.requestFullscreen().catch(() => { });
+//         }
+//     }
+// }

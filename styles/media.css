@@ -1,3 +1,33 @@
+#responsiveBar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 12px;
+}
+
+.responsiveBtns {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#responsiveBar button {
+    touch-action: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    width: 28px;
+    background-color: #FF9600;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 1px 2px 8px 1px;
+}
+
 @media screen and (max-width: 720px),
 screen and (max-height: 530px) {
     body {
@@ -26,7 +56,8 @@ screen and (max-height: 530px) {
         height: 100%;
     }
 
-    #gameBar {
+    #gameBar, 
+    #responsiveBar {
         bottom: 5px;
     }
 

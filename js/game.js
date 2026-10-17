@@ -34,7 +34,7 @@ function pauseGame() {
 }
 
 function startGame() {
-    enterFullscreen();
+    // enterFullscreen();
     document.getElementById('startScreen').style.display = 'none';
     document.getElementById('canvas').style.display = 'block';
     document.getElementById('gameBar').style.display = 'flex';
@@ -74,9 +74,6 @@ window.addEventListener("keydown", event => {
     if (event.key === "ArrowRight") {
         keyboard.RIGHT = true;
     }
-    if (event.key === "ArrowDown") {
-        keyboard.DOWN = true;
-    }
     if (event.key === "ArrowUp") {
         keyboard.UP = true;
     }
@@ -95,9 +92,6 @@ window.addEventListener("keyup", event => {
     if (event.key === "ArrowRight") {
         keyboard.RIGHT = false;
     }
-    if (event.key === "ArrowDown") {
-        keyboard.DOWN = false;
-    }
     if (event.key === "ArrowUp") {
         keyboard.UP = false;
     }
@@ -108,3 +102,23 @@ window.addEventListener("keyup", event => {
         keyboard.D = false;
     }
 })
+
+window.addEventListener('load', () => {
+    addTouchEvents('btnLeft', 'LEFT');
+    addTouchEvents('btnRight', 'RIGHT');
+    addTouchEvents('btnThrow', 'D');
+    addTouchEvents('btnJump', 'UP');
+    addTouchEvents('btnJump', 'SPACE');
+});
+
+function addTouchEvents(btnID, key) {
+    document.getElementById(btnID).addEventListener('touchstart', event => {
+        event.preventDefault();
+        keyboard[key] = true;
+    });
+
+    document.getElementById(btnID).addEventListener('touchend', event => {
+        event.preventDefault();
+        keyboard[key] = false;
+    })
+}

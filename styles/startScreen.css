@@ -29,6 +29,9 @@
     color: #FF9600;
     max-width: 600px;
     letter-spacing: 2px;
+    box-sizing: border-box;
+    max-height: 80vh;
+    overflow-y: auto;
     background-image:
         linear-gradient(rgba(0, 0, 0, 0.6)),
         url('../assets/background_desert.jpg');
