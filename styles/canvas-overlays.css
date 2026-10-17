@@ -4,6 +4,9 @@
     position: absolute;
     bottom: 10px;
     left: 47%;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 #pauseBtn,

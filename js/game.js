@@ -34,7 +34,6 @@ function pauseGame() {
 }
 
 function startGame() {
-    // enterFullscreen();
     document.getElementById('startScreen').style.display = 'none';
     document.getElementById('canvas').style.display = 'block';
     document.getElementById('gameBar').style.display = 'flex';
@@ -119,6 +118,10 @@ function addTouchEvents(btnID, key) {
 
     document.getElementById(btnID).addEventListener('touchend', event => {
         event.preventDefault();
+        keyboard[key] = false;
+    })
+
+    document.getElementById(btnID).addEventListener('touchcancel', () => {
         keyboard[key] = false;
     })
 }

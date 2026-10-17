@@ -7,6 +7,9 @@
     align-items: center;
     justify-content: space-between;
     padding-inline: 12px;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .responsiveBtns {
