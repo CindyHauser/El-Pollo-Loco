@@ -37,6 +37,7 @@ function startGame() {
     document.getElementById('startScreen').style.display = 'none';
     document.getElementById('canvas').style.display = 'block';
     document.getElementById('gameBar').style.display = 'flex';
+    document.getElementById('responsiveBar').classList.add('touchBtns');
     backgroundMusic.play();
     initLevel();
     init();
@@ -57,8 +58,7 @@ function homeScreen() {
     document.getElementById('startScreen').style.display = 'flex';
     document.getElementById('canvas').style.display = 'none';
     document.getElementById('endScreen').style.display = 'none';
-    backgroundMusic.pause();
-    backgroundMusic.currentTime = 0;
+    document.getElementById('responsiveBar').classList.remove('touchBtns');
 }
 
 function init() {

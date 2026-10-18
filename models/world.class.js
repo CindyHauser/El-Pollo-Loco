@@ -73,6 +73,8 @@ class World {
             if (enemy.isDead() || !this.character.isColliding(enemy)) return;
             if (this.character.speedY < 0 && enemy != this.level.endboss[0]) {
                 enemy.die();
+                jumpOnChicken.currentTime = 0;
+                jumpOnChicken.play();
             } else {
                 this.character.hit();
                 this.healthbar.setPercentage(this.healthbar.IMAGES_HEALTH, this.character.energy);
@@ -121,7 +123,7 @@ class World {
 
     checkIfEndbossIsAlert() {
         const endboss = this.level.endboss[0];
-        if (endboss && !endboss.isDead() && this.character.x >= this.level.endboss[0].x - 650) {
+        if (endboss && !endboss.isDead() && this.character.x >= this.level.endboss[0].x - 560) {
             endboss.isAlert = true;
         }
     }
