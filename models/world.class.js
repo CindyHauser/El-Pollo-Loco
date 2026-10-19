@@ -55,7 +55,11 @@ class World {
 
     checkThrowObject() {
         if (this.keyboard.D && this.bottlesAmount > 0) {
-            let bottle = new ThrowableObject(this.character.x + 55, this.character.y + this.character.height - 110);
+            let throwWithRightHand = this.character.otherDirection ? this.character.x + 10 : this.character.x + 55;
+            let bottle = new ThrowableObject(
+                throwWithRightHand,
+                this.character.y + this.character.height - 110,
+                this.character.otherDirection);
             this.throwableObjects.push(bottle);
             this.character.lastKeypress = Date.now();
             this.bottlesAmount -= 20;

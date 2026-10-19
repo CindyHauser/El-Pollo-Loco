@@ -23,7 +23,7 @@ class GameOver {
 
     youLose(endScreen) {
         endScreen.style.display = 'flex';
-        endScreen.style.backgroundImage = "url('../img/You won, you lost/Game Over.png')";
+        endScreen.style.backgroundImage = "url('./img/You won, you lost/Game Over.png')";
         document.getElementById('gameBar').style.display = 'none';
         document.getElementById('responsiveBar').classList.remove('touchBtns');
         backgroundMusic.pause();
@@ -33,7 +33,7 @@ class GameOver {
 
     youWin(endScreen) {
         endScreen.style.display = 'flex';
-        endScreen.style.backgroundImage = "url('../img/You won, you lost/You Win A.png')";
+        endScreen.style.backgroundImage = "url('./img/You won, you lost/You Win A.png')";
         document.getElementById('gameBar').style.display = 'none';
         document.getElementById('responsiveBar').classList.remove('touchBtns');
         backgroundMusic.pause();

@@ -1,0 +1,47 @@
+.impressum_body {
+    min-height: 100vh;
+    height: auto;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.impressum {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #222;
+    border-radius: 10px;
+}
+
+.impressum h1 {
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+.impressum h2 {
+    margin-top: 28px;
+    font-size: 20px;
+}
+
+.impressum p {
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.impressum a {
+    display: inline-block;
+    margin-top: 25px;
+    color: #124658;
+}
+
+@media screen and (max-width: 720px) {
+    .impressum {
+        padding: 20px;
+    }
+
+    .impressum h1 {
+        font-size: 28px;
+    }
+}

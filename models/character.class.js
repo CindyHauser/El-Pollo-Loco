@@ -116,7 +116,7 @@ class Character extends MovableObject {
             jumpSound.play();
             this.lastKeypress = Date.now();
         }
-        this.world.camera_x = -this.x + 100;
+        this.world.camera_x = Math.max(-2160, -this.x + 100);
     }
 
     moveAnimationsForCharacter() {
