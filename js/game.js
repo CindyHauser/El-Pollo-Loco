@@ -18,19 +18,29 @@ function stopGame() {
 
 function pauseGame() {
     if (!isPaused) {
-        stopGame();
-        isPaused = true;
-        backgroundMusic.pause();
+        pausedGame();
     } else {
-        intervalIDs = [];
-        intervalFunctions.forEach(({ fn, time }) => {
-            let id = setInterval(fn, time);
-            intervalIDs.push(id);
-        })
-        backgroundMusic.play();
-        isPaused = false;
+        continueGame();
     }
-    document.getElementById('pauseBtn').innerHTML = isPaused ? '<img src="./assets/buttons/play-canvas.svg" alt="pause Button">' : '<img src="./assets/buttons/pause-canvas.svg" alt="pause Button">';
+    document.getElementById('pauseBtn').innerHTML = isPaused ?
+        '<img src="./assets/buttons/play-canvas.svg" alt="pause Button">' :
+        '<img src="./assets/buttons/pause-canvas.svg" alt="pause Button">';
+}
+
+function pausedGame() {
+    stopGame();
+    isPaused = true;
+    backgroundMusic.pause();
+}
+
+function continueGame() {
+    intervalIDs = [];
+    intervalFunctions.forEach(({ fn, time }) => {
+        let id = setInterval(fn, time);
+        intervalIDs.push(id);
+    })
+    backgroundMusic.play();
+    isPaused = false;
 }
 
 function startGame() {
@@ -49,6 +59,7 @@ function restartGame() {
     intervalFunctions = [];
     document.getElementById('endScreen').style.display = 'none';
     document.getElementById('gameBar').style.display = 'flex';
+    document.getElementById('responsiveBar').classList.add('touchBtns');
     backgroundMusic.play();
     initLevel();
     init();
@@ -67,6 +78,15 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 };
+
+function toggleFullscreen() {
+    let game = document.querySelector('.canvas_endscreen_startscreen_wrapper');
+    if (!document.fullscreenElement) {
+        game.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}
 
 window.addEventListener("keydown", event => {
     if (event.key === "ArrowLeft") {
