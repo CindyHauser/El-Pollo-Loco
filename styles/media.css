@@ -41,6 +41,10 @@ screen and (max-height: 530px) {
         overflow: hidden;
     }
 
+    .impressum_link {
+        font-size: 12px;
+    }
+
     h1 {
         display: none;
     }
@@ -63,7 +67,7 @@ screen and (max-height: 530px) {
         display: flex;
     }
 
-    #gameBar, 
+    #gameBar,
     #responsiveBar {
         bottom: 5px;
     }
@@ -82,6 +86,25 @@ screen and (max-height: 530px) {
     h1 {
         font-size: 38px;
         margin: 0;
+    }
+}
+
+@media screen and (max-height: 400px) {
+    #endScreen button {
+        font-size: 10px;
+        width: 50px;
+    }
+
+    @keyframes buttonsComeForward {
+        from {
+            opacity: 0;
+            transform: translateY(42px) scale(0.5);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(42px) scale(2);
+        }
     }
 }
 

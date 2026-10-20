@@ -35,6 +35,7 @@ function pauseGame() {
 
 function startGame() {
     document.getElementById('startScreen').style.display = 'none';
+    document.querySelector('.impressum_link').style.display = 'none';
     document.getElementById('canvas').style.display = 'block';
     document.getElementById('gameBar').style.display = 'flex';
     document.getElementById('responsiveBar').classList.add('touchBtns');
@@ -56,6 +57,7 @@ function restartGame() {
 function homeScreen() {
     intervalIDs = [];
     document.getElementById('startScreen').style.display = 'flex';
+    document.querySelector('.impressum_link').style.display = 'block';
     document.getElementById('canvas').style.display = 'none';
     document.getElementById('endScreen').style.display = 'none';
     document.getElementById('responsiveBar').classList.remove('touchBtns');

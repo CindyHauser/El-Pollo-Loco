@@ -6,13 +6,15 @@
 }
 
 .impressum {
+    font-family: 'ranchers';
+    letter-spacing: 1px;
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
     padding: 30px;
-    background-color: rgba(255, 255, 255, 0.95);
-    color: #222;
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
+    box-sizing: border-box;
 }
 
 .impressum h1 {
@@ -34,6 +36,11 @@
     display: inline-block;
     margin-top: 25px;
     color: #124658;
+    text-decoration: none;
+}
+
+.impressum a:hover {
+    text-decoration: underline;
 }
 
 @media screen and (max-width: 720px) {

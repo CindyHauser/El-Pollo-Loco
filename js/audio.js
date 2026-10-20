@@ -5,6 +5,7 @@ const bottlePickUp = new Audio('audio/bottle-pick-up.wav');
 const jumpOnChicken = new Audio('audio/chicken-hit.wav');
 const youWin = new Audio('audio/win.wav');
 const youLose = new Audio('audio/lose.wav');
+const bottleSplash = new Audio('audio/splash-bottle.wav');
 
 let isMuted = false;
 
@@ -16,6 +17,7 @@ bottlePickUp.volume = 0.2;
 jumpOnChicken.volume = 0.2;
 youWin.volume = 0.2;
 youLose.volume = 0.2;
+bottleSplash.volume = 0.2;
 
 function toggleMuteSounds() {
     isMuted = !isMuted;
@@ -26,6 +28,7 @@ function toggleMuteSounds() {
     jumpOnChicken.muted = isMuted;
     youWin.muted = isMuted;
     youLose.muted = isMuted;
+    bottleSplash.muted = isMuted;
     document.getElementById('muteSoundsBtn').innerHTML = isMuted ? '<img src="./assets/buttons/sound-off.svg" alt="sound off">' :
         '<img src="./assets/buttons/sound-on.svg" alt="sound on">';
 }

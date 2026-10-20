@@ -37,17 +37,21 @@ class ThrowableObject extends MovableObject {
             this.throwInterval = setStoppableInterval(() => {
                 if (!this.hasSplashed) {
                     this.x -= 12;
-                }}, 25);
+                }
+            }, 25);
         } else {
             this.throwInterval = setStoppableInterval(() => {
                 if (!this.hasSplashed) {
                     this.x += 12;
-                }}, 25);
+                }
+            }, 25);
         }
     }
 
     splash() {
         this.hasSplashed = true;
+        bottleSplash.currentTime = 0;
+        bottleSplash.play();
         this.currentImage = 0;
         this.speedY = 0;
     }
