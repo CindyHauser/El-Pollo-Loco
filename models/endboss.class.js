@@ -4,7 +4,7 @@ class Endboss extends MovableObject {
     width = 240;
     y = 110;
     energy = 100;
-    speed = 1.5;
+    speed = 2;
     isAlert = false;
     inAttackMode = false;
     isAttacking = false;
@@ -60,6 +60,9 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
+    /**
+     * Initializes the end boss, loads its animation images, and starts its behavior.
+     */
     constructor() {
         super().loadImage(this.IMAGES_WALKING[1]);
         this.loadImages(this.IMAGES_ALERT);
@@ -71,6 +74,9 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Starts the intervals that control the end boss's movement and animations.
+     */
     animate() {
         setStoppableInterval(() => {
             this.walkingBoss();
@@ -81,12 +87,16 @@ class Endboss extends MovableObject {
         }, 100);
     }
 
+    /**
+     * Selects and plays the animation that matches the end boss's current state.
+     */
     fightingBoss() {
         if (this.isDead()) {
             this.playDeathAnimation();
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
         } else if (this.isAlert && !this.inAttackMode) {
+            crowing.play();
             this.playAlertAnimation();
         } else if (this.isWalking()) {
             this.playAnimation(this.IMAGES_WALKING);
@@ -95,6 +105,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Plays the alert animation and switches the end boss to attack mode when it finishes.
+     */
     playAlertAnimation() {
         if (this.alertAnimationIndex === this.IMAGES_ALERT.length) {
             this.inAttackMode = true;
@@ -106,6 +119,9 @@ class Endboss extends MovableObject {
         this.alertAnimationIndex++;
     }
 
+    /**
+     * Plays the attack animation and clears the attacking state when it finishes.
+     */
     playAttackAnimation() {
         if (this.attackAnimationIndex <= this.IMAGES_ATTACK.length - 1) {
             this.currentImage = this.attackAnimationIndex;
@@ -117,10 +133,17 @@ class Endboss extends MovableObject {
         };
     }
 
+    /**
+     * Checks whether the end boss is currently attacking and is neither dead nor hurt.
+     * @returns {boolean} Whether the end boss is actively attacking.
+     */
     isNowAttacking() {
         return !this.isDead() && this.isAttacking && !this.isHurt();
     }
 
+    /**
+     * Plays the death animation and resets its frame index after the final frame.
+     */
     playDeathAnimation() {
         if (this.deathAnimationIndex <= this.IMAGES_DEAD.length - 1) {
             this.currentImage = this.deathAnimationIndex;
@@ -131,12 +154,19 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Moves the end boss left while it is in its walking state.
+     */
     walkingBoss() {
         if (this.isWalking()) {
             this.moveLeft();
         }
     }
 
+    /**
+     * Checks whether the end boss is alive, in attack mode, not attacking, and not hurt.
+     * @returns {boolean} Whether the end boss is currently walking.
+     */
     isWalking() {
         return !this.isDead() && this.inAttackMode && !this.isAttacking && !this.isHurt();
     }

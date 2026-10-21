@@ -9,6 +9,9 @@ class HealthBar extends StatusBar {
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png'
     ];
 
+    /**
+     * Initializes the health bar, loads its images, and sets its value to full health.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH);

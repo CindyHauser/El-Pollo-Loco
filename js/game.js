@@ -5,6 +5,12 @@ let intervalIDs = [];
 let isPaused = false;
 let intervalFunctions = [];
 
+/**
+ * Starts an interval that can be stopped or restarted with the game.
+ * @param {Function} fn Function to execute at each interval.
+ * @param {number} time Delay between executions in milliseconds.
+ * @returns {number} Identifier of the created interval.
+ */
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
     intervalIDs.push(id);
@@ -12,10 +18,16 @@ function setStoppableInterval(fn, time) {
     return id;
 }
 
+/**
+ * Stops all currently registered game intervals.
+ */
 function stopGame() {
     intervalIDs.forEach(clearInterval);
 }
 
+/**
+ * Toggles the game between paused and running states and updates the pause button.
+ */
 function pauseGame() {
     if (!isPaused) {
         pausedGame();
@@ -27,12 +39,18 @@ function pauseGame() {
         '<img src="./assets/buttons/pause-canvas.svg" alt="pause Button">';
 }
 
+/**
+ * Pauses the game intervals and background music.
+ */
 function pausedGame() {
     stopGame();
     isPaused = true;
     backgroundMusic.pause();
 }
 
+/**
+ * Restarts the registered intervals and resumes the background music.
+ */
 function continueGame() {
     intervalIDs = [];
     intervalFunctions.forEach(({ fn, time }) => {
@@ -43,6 +61,9 @@ function continueGame() {
     isPaused = false;
 }
 
+/**
+ * Hides the start screen and initializes a new game.
+ */
 function startGame() {
     document.getElementById('startScreen').style.display = 'none';
     document.querySelector('.impressum_link').style.display = 'none';
@@ -54,6 +75,9 @@ function startGame() {
     init();
 }
 
+/**
+ * Resets game intervals and starts a new game after a game-over screen.
+ */
 function restartGame() {
     intervalIDs = [];
     intervalFunctions = [];
@@ -65,6 +89,9 @@ function restartGame() {
     init();
 }
 
+/**
+ * Returns to the start screen and hides the game interface.
+ */
 function homeScreen() {
     intervalIDs = [];
     document.getElementById('startScreen').style.display = 'flex';
@@ -74,11 +101,17 @@ function homeScreen() {
     document.getElementById('responsiveBar').classList.remove('touchBtns');
 }
 
+/**
+ * Creates the game world using the canvas and keyboard controls.
+ */
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 };
 
+/**
+ * Toggles fullscreen mode for the game wrapper.
+ */
 function toggleFullscreen() {
     let game = document.querySelector('.canvas_endscreen_startscreen_wrapper');
     if (!document.fullscreenElement) {
@@ -132,6 +165,11 @@ window.addEventListener('load', () => {
     addTouchEvents('btnJump', 'SPACE');
 });
 
+/**
+ * Connects touch events on a button to a keyboard control state.
+ * @param {string} btnID ID of the button element.
+ * @param {string} key Keyboard control property to update.
+ */
 function addTouchEvents(btnID, key) {
     document.getElementById(btnID).addEventListener('touchstart', event => {
         event.preventDefault();

@@ -16,15 +16,27 @@ class DrawableObject {
         right: 0
     }
 
+    /**
+     * Loads an image and assigns it as the drawable object's current image.
+     * @param {string} path Path to the image file.
+     */
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
+    /**
+     * Draws the current image on the canvas at the object's position and size.
+     * @param {CanvasRenderingContext2D} ctx Canvas rendering context.
+     */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
+    /**
+     * Provides a hook for drawing debug frames around characters and the end boss.
+     * @param {CanvasRenderingContext2D} ctx Canvas rendering context.
+     */
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Endboss) {
             // ctx.beginPath();
@@ -46,6 +58,10 @@ class DrawableObject {
         }
     }
 
+    /**
+     * Loads images into the object's cache for later use.
+     * @param {string[]} arr Paths to the image files.
+     */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
@@ -54,6 +70,10 @@ class DrawableObject {
         });
     }
 
+    /**
+     * Displays the next image in the animation sequence.
+     * @param {string[]} images Paths to the animation image files.
+     */
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];

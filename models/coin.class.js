@@ -15,6 +15,11 @@ class Coin extends DrawableObject {
         'img/8_coin/coin_2.png'
     ];
 
+    /**
+     * Creates a coin at the specified position and starts its animation.
+     * @param {number} x Horizontal position of the coin.
+     * @param {number} y Vertical position of the coin.
+     */
     constructor(x, y) {
         super();
         this.loadImages(this.IMAGES_COIN);
@@ -24,6 +29,9 @@ class Coin extends DrawableObject {
         this.animate();
     }
 
+    /**
+     * Starts the interval that cycles through the coin images.
+     */
     animate() {
         setStoppableInterval(() => {
             this.playAnimation(this.IMAGES_COIN);

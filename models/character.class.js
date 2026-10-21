@@ -70,6 +70,9 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
 
+    /**
+     * Creates the character, loads its animation images, and starts gravity and animation.
+     */
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -82,47 +85,79 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Starts the intervals that handle character movement and animations.
+     */
     animate() {
         setStoppableInterval(() => {
             this.movingTheCharacter();
         }, 1000 / 60);
-
         setStoppableInterval(() => {
             this.moveAnimationsForCharacter();
         }, 50);
-
         setStoppableInterval(() => {
             this.idleAnimationsForCharacter();
         }, 150);
     }
 
-
+    /**
+     * Processes keyboard input to move or jump and updates the camera position.
+     */
     movingTheCharacter() {
         if (this.isDead()) {
             return;
         }
         if (this.world.keyboard.RIGHT && this.x < level1.level_end_x) {
-            this.moveRight();
-            this.lastKeypress = Date.now();
+            this.goRight();
         }
         if (this.world.keyboard.LEFT && this.x > 0) {
-            this.moveLeft();
-            this.otherDirection = true;
-            this.lastKeypress = Date.now();
+            this.goLeft();
         }
         if ((this.world.keyboard.UP || this.world.keyboard.SPACE) && !this.isAboveGround()) {
-            this.jump();
-            jumpSound.currentTime = 0;
-            jumpSound.play();
-            this.lastKeypress = Date.now();
+            this.jumpWithSound();
         }
         this.world.camera_x = Math.max(-2160, -this.x + 100);
     }
 
+    /**
+     * Makes the character jump, plays the jump sound, and records the input time.
+     */
+    jumpWithSound() {
+        this.stopSnoring();
+        this.jump();
+        jumpSound.currentTime = 0;
+        jumpSound.play();
+        this.lastKeypress = Date.now();
+    }
+
+    /**
+     * Moves the character left, turns it toward the movement direction, and records the input time.
+     */
+    goLeft() {
+        this.stopSnoring();
+        this.moveLeft();
+        this.otherDirection = true;
+        this.lastKeypress = Date.now();
+    }
+
+    /**
+     * Moves the character right and records the input time.
+     */
+    goRight() {
+        this.stopSnoring();
+        this.moveRight();
+        this.lastKeypress = Date.now();
+    }
+
+    /**
+     * Selects the character's animation based on its state and recent movement.
+     */
     moveAnimationsForCharacter() {
         if (this.isDead()) {
+            this.stopSnoring();
             this.playAnimation(this.IMAGES_DYING);
         } else if (this.isHurt()) {
+            this.stopSnoring();
             this.playAnimation(this.IMAGES_HURTING);
         } else if (this.isAboveGround()) {
             this.playAnimation(this.IMAGES_JUMPING);
@@ -133,6 +168,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Plays idle animations when no relevant input or action is active.
+     */
     idleAnimationsForCharacter() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP ||
             this.world.keyboard.D || this.world.keyboard.SPACE || this.isDead() || this.isHurt() || this.isAboveGround()) {
@@ -140,8 +178,14 @@ class Character extends MovableObject {
         } else if (Date.now() - this.lastKeypress >= 3500 && Date.now() - this.lastKeypress < 8000) {
             this.playAnimation(this.IMAGES_IDLE);
         } else if (Date.now() - this.lastKeypress >= 8000) {
-            this.playAnimation(this.IMAGES_LONG_IDLE)
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+            snorePepe.play();
         }
+    }
+
+    stopSnoring() {
+        snorePepe.pause();
+        snorePepe.currentTime = 0;
     }
 
 }

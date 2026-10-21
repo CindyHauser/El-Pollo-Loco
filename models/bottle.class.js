@@ -17,6 +17,11 @@ class Bottle extends DrawableObject {
         'img/6_salsa_bottle/salsa_bottle.png'
     ]
 
+    /**
+     * Creates a bottle at the specified position and starts its animation.
+     * @param {number} x Horizontal position of the bottle.
+     * @param {number} y Vertical position of the bottle.
+     */
     constructor(x, y) {
         super();
         this.loadImage('img/6_salsa_bottle/salsa_bottle.png');
@@ -26,6 +31,9 @@ class Bottle extends DrawableObject {
         this.animate();
     }
 
+    /**
+     * Starts the interval that cycles through the bottle images.
+     */
     animate() {
         setStoppableInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE);

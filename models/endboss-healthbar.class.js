@@ -9,6 +9,9 @@ class EndbossHealthbar extends StatusBar {
         'img/7_statusbars/2_statusbar_endboss/blue/blue100.png'
     ]
 
+    /**
+     * Initializes the end boss health bar, loads its images, and sets its value to full health.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_ENDBOSS_HEALTH);

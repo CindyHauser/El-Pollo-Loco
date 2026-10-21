@@ -20,16 +20,22 @@ class Chicken extends MovableObject {
 
     deadImage = 'img/3_enemies_chicken/chicken_normal/2_dead/dead.png';
 
+    /**
+     * Creates a chicken with a random position and movement speed.
+     * @param {number} x The starting position to which a random offset is added.
+     */
     constructor(x) {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
-
         this.x = x + Math.random() * 500;
         this.speed = 0.15 + Math.random() * 0.25;
-
         this.animate();
     }
 
+    /**
+     * Starts the chicken's movement and animation intervals.
+     * While the chicken is alive, it moves left and plays its walking animation.
+     */
     animate() {
         this.moveInterval = setStoppableInterval(() => {
             if (!this.dead) {

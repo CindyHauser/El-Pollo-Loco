@@ -6,6 +6,8 @@ const jumpOnChicken = new Audio('audio/chicken-hit.wav');
 const youWin = new Audio('audio/win.wav');
 const youLose = new Audio('audio/lose.wav');
 const bottleSplash = new Audio('audio/splash-bottle.wav');
+const crowing = new Audio('audio/crowing.wav');
+const snorePepe = new Audio('audio/snore.wav');
 
 let isMuted = false;
 
@@ -18,7 +20,12 @@ jumpOnChicken.volume = 0.2;
 youWin.volume = 0.2;
 youLose.volume = 0.2;
 bottleSplash.volume = 0.2;
+crowing.volume = 0.2;
+snorePepe.volume = 0.4;
 
+/**
+ * Toggles mute state for all game audio and updates the mute button icon.
+ */
 function toggleMuteSounds() {
     isMuted = !isMuted;
     backgroundMusic.muted = isMuted;
@@ -29,6 +36,8 @@ function toggleMuteSounds() {
     youWin.muted = isMuted;
     youLose.muted = isMuted;
     bottleSplash.muted = isMuted;
+    crowing.muted = isMuted;
+    snorePepe.muted = isMuted;
     document.getElementById('muteSoundsBtn').innerHTML = isMuted ? '<img src="./assets/buttons/sound-off.svg" alt="sound off">' :
         '<img src="./assets/buttons/sound-on.svg" alt="sound on">';
 }

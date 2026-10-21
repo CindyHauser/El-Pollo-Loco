@@ -49,6 +49,10 @@ screen and (max-height: 530px) {
         display: none;
     }
 
+    #fullscreenBtn {
+        display: none;
+    }
+
     .canvas_endscreen_startscreen_wrapper {
         width: min(100vw, 150dvh);
         height: min(66.667vw, 100dvh);

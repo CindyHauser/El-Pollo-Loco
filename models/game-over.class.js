@@ -2,10 +2,17 @@ class GameOver {
 
     world;
 
+    /**
+     * Creates a game-over handler for the specified game world.
+     * @param {World} world The game world whose state is monitored.
+     */
     constructor(world) {
         this.world = world;
     }
 
+    /**
+     * Checks whether the character or end boss has been defeated and displays the result.
+     */
     checkGameOver() {
         let endScreen = document.getElementById('endScreen');
         if (this.world.character.isDead()) {
@@ -21,6 +28,10 @@ class GameOver {
         }
     }
 
+    /**
+     * Displays the game-over screen, stops the background music, and plays the defeat sound.
+     * @param {HTMLElement} endScreen The element used to display the end screen.
+     */
     youLose(endScreen) {
         endScreen.style.display = 'flex';
         endScreen.style.backgroundImage = "url('./img/You won, you lost/Game Over.png')";
@@ -31,6 +42,10 @@ class GameOver {
         youLose.play();
     }
 
+    /**
+     * Displays the victory screen, stops the background music, and plays the victory sound.
+     * @param {HTMLElement} endScreen The element used to display the end screen.
+     */
     youWin(endScreen) {
         endScreen.style.display = 'flex';
         endScreen.style.backgroundImage = "url('./img/You won, you lost/You Win A.png')";

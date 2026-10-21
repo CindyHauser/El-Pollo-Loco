@@ -14,6 +14,11 @@ class World {
     keyboard;
     camera_x = 0;
 
+    /**
+     * Initializes the game world and starts its rendering and update loops.
+     * @param {HTMLCanvasElement} canvas Canvas used to render the game.
+     * @param {Keyboard} keyboard Keyboard state used to control the game.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -24,6 +29,9 @@ class World {
         this.run();
     }
 
+    /**
+     * Starts the recurring game-state checks and collision handling.
+     */
     run() {
         setStoppableInterval(() => {
             this.checkBottleHitsChicken(this.level.enemies);
@@ -43,16 +51,25 @@ class World {
         }, 200);
     }
 
+    /**
+     * Assigns this world to the character so it can access the world state.
+     */
     setWorld() {
         this.character.world = this;
     }
 
+    /**
+     * Removes dead enemies and used throwable objects from their level collections.
+     */
     removeDeadAndUsedObjects() {
         this.level.enemies = this.level.enemies.filter((e) => !e.remove);
         this.level.smallEnemies = this.level.smallEnemies.filter((e) => !e.remove);
         this.throwableObjects = this.throwableObjects.filter((b) => !b.remove);
     }
 
+    /**
+     * Throws a bottle when the throw key is pressed and bottles are available.
+     */
     checkThrowObject() {
         if (this.keyboard.D && this.bottlesAmount > 0) {
             let throwWithRightHand = this.character.otherDirection ? this.character.x + 10 : this.character.x + 55;
@@ -67,11 +84,18 @@ class World {
         }
     }
 
+    /**
+     * Checks the character's collisions with bottles and coins.
+     */
     checkCollisions() {
         this.checkCollisionWithBottles(this.level.bottles);
         this.checkCollisionWithCoins(this.level.coins);
     }
 
+    /**
+     * Handles collisions between the character and enemies, including jumping on enemies.
+     * @param {MovableObject[]} chickens Enemies to check for collisions.
+     */
     checkCharacterCollidesWithChickensOrJumpOn(chickens) {
         chickens.forEach((enemy) => {
             if (enemy.isDead() || !this.character.isColliding(enemy)) return;
@@ -87,6 +111,10 @@ class World {
         })
     }
 
+    /**
+     * Collects bottles that collide with the character and updates the bottle bar.
+     * @param {Bottle[]} bottles Bottles to check for collisions.
+     */
     checkCollisionWithBottles(bottles) {
         bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle) && this.bottlesAmount < 100) {
@@ -99,6 +127,10 @@ class World {
         })
     }
 
+    /**
+     * Collects coins that collide with the character and updates the coin bar.
+     * @param {Coin[]} coins Coins to check for collisions.
+     */
     checkCollisionWithCoins(coins) {
         coins.forEach((coin) => {
             if (this.character.isColliding(coin) && this.coinsAmount < 100) {
@@ -111,6 +143,10 @@ class World {
         })
     }
 
+    /**
+     * Checks whether thrown bottles hit regular or small chicken enemies.
+     * @param {MovableObject[]} enemies Enemies to check against thrown bottles.
+     */
     checkBottleHitsChicken(enemies) {
         this.throwableObjects.forEach((bottle) => {
             if (bottle.hasSplashed) return;
@@ -125,6 +161,9 @@ class World {
         });
     }
 
+    /**
+     * Alerts the end boss when the character gets close enough.
+     */
     checkIfEndbossIsAlert() {
         const endboss = this.level.endboss[0];
         if (endboss && !endboss.isDead() && this.character.x >= this.level.endboss[0].x - 560) {
@@ -132,6 +171,10 @@ class World {
         }
     }
 
+    /**
+     * Checks whether thrown bottles hit the end boss and updates its health bar.
+     * @param {Endboss[]} endboss End boss instances to check against thrown bottles.
+     */
     checkBottleHitsEndboss(endboss) {
         this.throwableObjects.forEach((bottle) => {
             if (bottle.hasSplashed) return;
@@ -146,8 +189,12 @@ class World {
         })
     }
 
+    /**
+     * Shows the end boss health bar when the character approaches the end boss.
+     */
     checkHowCloseToEndboss() {
-        if (this.level.endboss[0] && !this.level.endboss[0].isDead() && this.character.x >= this.level.endboss[0].x - 640) {
+        if (this.level.endboss[0] && !this.level.endboss[0].isDead() &&
+            this.character.x >= this.level.endboss[0].x - 640) {
             this.endbossHealthbarVisible = true;
         }
         if (this.endbossHealthbarVisible) {
@@ -155,6 +202,9 @@ class World {
         }
     }
 
+    /**
+     * Clears and redraws the game canvas, then schedules the next animation frame.
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -189,12 +239,20 @@ class World {
         });
     }
 
+    /**
+     * Adds each object in a collection to the game map.
+     * @param {DrawableObject[]} objects Objects to draw.
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         });
     }
 
+    /**
+     * Draws an object, mirroring it first when it faces the opposite direction.
+     * @param {DrawableObject} mo Object to draw.
+     */
     addToMap(mo) {
 
         if (mo.otherDirection) {
@@ -208,6 +266,10 @@ class World {
         }
     }
 
+    /**
+     * Saves the canvas state and mirrors an object horizontally.
+     * @param {DrawableObject} mo Object to mirror.
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -215,6 +277,10 @@ class World {
         mo.x = mo.x * -1;
     }
 
+    /**
+     * Restores an object's horizontal position and the saved canvas state.
+     * @param {DrawableObject} mo Mirrored object to restore.
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();

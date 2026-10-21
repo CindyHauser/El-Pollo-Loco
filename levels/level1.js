@@ -1,5 +1,8 @@
 let level1;
 
+/**
+ * Initializes level 1 with its enemies, end boss, scenery, and collectibles.
+ */
 function initLevel() {
 
     level1 = new Level(
@@ -48,8 +51,10 @@ function initLevel() {
             new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 720 * 3)
         ],
         [
+            new Bottle(400, 225),
             new Bottle(500, 350),
             new Bottle(500, 100),
+            new Bottle(900, 225),
             new Bottle(1000, 350),
             new Bottle(1000, 100),
             new Bottle(1500, 350),

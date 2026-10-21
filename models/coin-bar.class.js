@@ -9,6 +9,9 @@ class CoinBar extends StatusBar {
         'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png'
     ];
 
+    /**
+     * Initializes the coin status bar, loads its images, and sets its initial value to zero.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_COIN_BAR);

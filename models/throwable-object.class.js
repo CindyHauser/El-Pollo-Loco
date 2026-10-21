@@ -17,6 +17,12 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ]
 
+    /**
+     * Creates a throwable bottle, sets its position and direction, and starts it moving and animating.
+     * @param {number} x Initial horizontal position.
+     * @param {number} y Initial vertical position.
+     * @param {boolean} otherDirection Whether the bottle is thrown to the left.
+     */
     constructor(x, y, otherDirection) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_THROW_BOTTLE);
@@ -30,24 +36,28 @@ class ThrowableObject extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Applies upward velocity and gravity, then moves the bottle horizontally in its throw direction.
+     */
     throw() {
         this.speedY = 15;
         this.applyGravity();
         if (this.otherDirection) {
             this.throwInterval = setStoppableInterval(() => {
                 if (!this.hasSplashed) {
-                    this.x -= 12;
-                }
+                    this.x -= 12;}
             }, 25);
         } else {
             this.throwInterval = setStoppableInterval(() => {
                 if (!this.hasSplashed) {
-                    this.x += 12;
-                }
+                    this.x += 12;}
             }, 25);
         }
     }
 
+    /**
+     * Marks the bottle as splashed, plays the splash sound, and stops its upward movement.
+     */
     splash() {
         this.hasSplashed = true;
         bottleSplash.currentTime = 0;
@@ -56,6 +66,10 @@ class ThrowableObject extends MovableObject {
         this.speedY = 0;
     }
 
+    /**
+     * Starts the bottle rotation animation and plays the splash animation when applicable.
+     * Removes the bottle after the splash animation finishes.
+     */
     animate() {
         this.animationInterval = setStoppableInterval(() => {
             if (!this.hasSplashed) {
