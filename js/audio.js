@@ -9,7 +9,7 @@ const bottleSplash = new Audio('audio/splash-bottle.wav');
 const crowing = new Audio('audio/crowing.wav');
 const snorePepe = new Audio('audio/snore.wav');
 
-let isMuted = false;
+let isMuted = localStorage.getItem('isMuted') === 'true';
 
 backgroundMusic.loop = true;
 backgroundMusic.volume = 0.1;
@@ -28,6 +28,11 @@ snorePepe.volume = 0.4;
  */
 function toggleMuteSounds() {
     isMuted = !isMuted;
+    localStorage.setItem('isMuted', isMuted);
+    applyMuteStatus();
+}
+
+function applyMuteStatus() {
     backgroundMusic.muted = isMuted;
     jumpSound.muted = isMuted;
     coinSound.muted = isMuted;
@@ -41,3 +46,5 @@ function toggleMuteSounds() {
     document.getElementById('muteSoundsBtn').innerHTML = isMuted ? '<img src="./assets/buttons/sound-off.svg" alt="sound off">' :
         '<img src="./assets/buttons/sound-on.svg" alt="sound on">';
 }
+
+window.addEventListener('load', applyMuteStatus);
