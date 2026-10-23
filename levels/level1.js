@@ -64,11 +64,10 @@ function initLevel() {
         ],
         [
             new Coin(300, 200),
-            new Coin(300, 150),
             new Coin(750, 200),
-            new Coin(750, 150),
             new Coin(1250, 200),
-            new Coin(1250, 150),
+            new Coin(1750, 200),
+            new Coin(2200, 200)
         ]
     )
 }

@@ -15,7 +15,7 @@
 .responsiveBtns {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
 #responsiveBar button {
@@ -23,12 +23,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 28px;
-    width: 28px;
+    height: 38px;
+    width: 38px;
     background-color: #FF9600;
     border-radius: 50%;
     border: none;
     box-shadow: 1px 2px 8px 1px;
+}
+
+#responsiveBar button img {
+    height: 24px;
+}
+
+/* for detecting touch devices */
+@media (any-pointer: coarse) {
+    #responsiveBar.touchBtns {
+        display: flex;
+    }
 }
 
 @media screen and (max-width: 720px),
@@ -65,10 +76,6 @@ screen and (max-height: 530px) {
     #endScreen {
         width: 100%;
         height: 100%;
-    }
-
-    #responsiveBar.touchBtns {
-        display: flex;
     }
 
     #gameBar,

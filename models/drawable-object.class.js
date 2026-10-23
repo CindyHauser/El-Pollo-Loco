@@ -7,6 +7,8 @@ class DrawableObject {
     img;
     imageCache = {};
     currentImage = 0;
+    currentJumpImage = 0;
+    lastJumpImageTime = 0;
     remove = false;
 
     offset = {
@@ -45,7 +47,7 @@ class DrawableObject {
             // ctx.rect(this.x, this.y, this.width, this.height);
             // ctx.stroke();
 
-            //Hitbox:
+            // Hitbox:
             // ctx.beginPath();
             // ctx.lineWidth = '5';
             // ctx.strokeStyle = 'red';
@@ -79,5 +81,21 @@ class DrawableObject {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
+    }
+
+    /**
+     * Advances the jump animation to the next frame if enough time has passed.
+     * The method updates the current displayed image and throttles the animation speed.
+     * @param {string[]} images Array of image paths used for the jump animation sequence.
+     */
+    playJumpAnimation(images) {
+        if (Date.now() - this.lastJumpImageTime > 80) {
+            if (this.currentJumpImage < images.length) {
+                let path = images[this.currentJumpImage];
+                this.img = this.imageCache[path];
+                this.currentJumpImage++;
+                this.lastJumpImageTime = Date.now();
+            }
+        }
     }
 }

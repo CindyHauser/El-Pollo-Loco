@@ -7,12 +7,12 @@ class Character extends MovableObject {
     speed = 5;
     lastKeypress = Date.now();
     offset = {
-        top: 120,
+        top: 100,
         bottom: 30,
         left: 35,
         right: 30
     }
-
+    
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -153,6 +153,10 @@ class Character extends MovableObject {
      * Selects the character's animation based on its state and recent movement.
      */
     moveAnimationsForCharacter() {
+        if (!this.isAboveGround()) {
+            this.currentJumpImage = 0;
+        }
+        
         if (this.isDead()) {
             this.stopSnoring();
             this.playAnimation(this.IMAGES_DYING);
@@ -160,7 +164,7 @@ class Character extends MovableObject {
             this.stopSnoring();
             this.playAnimation(this.IMAGES_HURTING);
         } else if (this.isAboveGround()) {
-            this.playAnimation(this.IMAGES_JUMPING);
+            this.playJumpAnimation(this.IMAGES_JUMPING);
         } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
             this.playAnimation(this.IMAGES_WALKING);
         } else if (Date.now() - this.lastKeypress < 3500) {
