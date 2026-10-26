@@ -36,31 +36,6 @@ class DrawableObject {
     }
 
     /**
-     * Provides a hook for drawing debug frames around characters and the end boss.
-     * @param {CanvasRenderingContext2D} ctx Canvas rendering context.
-     */
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Endboss) {
-            // ctx.beginPath();
-            // ctx.lineWidth = '5';
-            // ctx.strokeStyle = 'blue';
-            // ctx.rect(this.x, this.y, this.width, this.height);
-            // ctx.stroke();
-
-            // Hitbox:
-            // ctx.beginPath();
-            // ctx.lineWidth = '5';
-            // ctx.strokeStyle = 'red';
-            // ctx.rect(
-            //     this.x + this.offset.left,
-            //     this.y + this.offset.top,
-            //     this.width - this.offset.left - this.offset.right,
-            //     this.height - this.offset.top - this.offset.bottom);
-            // ctx.stroke();
-        }
-    }
-
-    /**
      * Loads images into the object's cache for later use.
      * @param {string[]} arr Paths to the image files.
      */

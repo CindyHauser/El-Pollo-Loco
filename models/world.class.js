@@ -8,6 +8,7 @@ class World {
     throwableObjects = [];
     coinsAmount = 0;
     bottlesAmount = 0;
+    lastBottleThrowTime = 0;
     level = level1;
     canvas;
     ctx;
@@ -23,8 +24,8 @@ class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.draw();
         this.setWorld();
+        this.draw();
         this.gameOver = new GameOver(this);
         this.run();
     }
@@ -56,6 +57,7 @@ class World {
      */
     setWorld() {
         this.character.world = this;
+        this.level.endboss[0].world = this;
     }
 
     /**
@@ -71,17 +73,28 @@ class World {
      * Throws a bottle when the throw key is pressed and bottles are available.
      */
     checkThrowObject() {
-        if (this.keyboard.D && this.bottlesAmount > 0) {
-            let throwWithRightHand = this.character.otherDirection ? this.character.x + 10 : this.character.x + 55;
+        if (this.canCharacterThrowBottle()) {
+            let throwWithRightHand = this.character.otherDirection ? this.character.x + 10 :
+                this.character.x + 55;
             let bottle = new ThrowableObject(
-                throwWithRightHand,
-                this.character.y + this.character.height - 110,
+                throwWithRightHand, this.character.y + this.character.height - 110,
                 this.character.otherDirection);
             this.throwableObjects.push(bottle);
             this.character.lastKeypress = Date.now();
             this.bottlesAmount -= 20;
             this.bottlebar.setPercentage(this.bottlebar.IMAGES_BOTTLE_BAR, this.bottlesAmount);
+            this.lastBottleThrowTime = Date.now();
         }
+    }
+
+    /**
+     * 
+     * @returns {boolean} Checks whether the character is allowed to throw a bottle
+     */
+    canCharacterThrowBottle() {
+        return this.keyboard.D &&
+            this.bottlesAmount > 0 &&
+            Date.now() - this.lastBottleThrowTime >= 1000;
     }
 
     /**
@@ -223,7 +236,7 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.level.endboss);
+        this.addToMap(this.level.endboss[0]);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.smallEnemies);
@@ -259,7 +272,6 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

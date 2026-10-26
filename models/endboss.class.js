@@ -159,7 +159,20 @@ class Endboss extends MovableObject {
      */
     walkingBoss() {
         if (this.isWalking()) {
+            this.followCharacter();
+        }
+    }
+
+    /**
+     * Moves the end boss toward the character while it is walking and updates its direction.
+     */
+    followCharacter() {
+        if (this.x > this.world.character.x && this.isWalking()) {
             this.moveLeft();
+            this.otherDirection = false;
+        } else if (this.x < this.world.character.x && this.isWalking()) {
+            this.moveRight();
+            this.otherDirection = true;
         }
     }
 
