@@ -79,6 +79,7 @@ function startGame() {
  * Resets game intervals and starts a new game after a game-over screen.
  */
 function restartGame() {
+    stopGame();
     intervalIDs = [];
     intervalFunctions = [];
     document.getElementById('endScreen').style.display = 'none';
@@ -93,7 +94,9 @@ function restartGame() {
  * Returns to the start screen and hides the game interface.
  */
 function homeScreen() {
+    stopGame();
     intervalIDs = [];
+    intervalFunctions = [];
     document.getElementById('startScreen').style.display = 'flex';
     document.querySelector('.impressum_link').style.display = 'block';
     document.getElementById('canvas').style.display = 'none';
@@ -172,16 +175,20 @@ window.addEventListener('load', () => {
  */
 function addTouchEvents(btnID, key) {
     document.getElementById(btnID).addEventListener('touchstart', event => {
-        event.preventDefault();
+        if (event.cancelable) {
+            event.preventDefault();
+        }
         keyboard[key] = true;
     });
 
     document.getElementById(btnID).addEventListener('touchend', event => {
-        event.preventDefault();
+        if (event.cancelable) {
+            event.preventDefault();
+        }
         keyboard[key] = false;
-    })
+    });
 
     document.getElementById(btnID).addEventListener('touchcancel', () => {
         keyboard[key] = false;
-    })
+    });
 }
